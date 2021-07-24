@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block breadcrumb-items %}
+    <li class="breadcrumb-item"><a href="#">Forum</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Library</li>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        {% for category in object_list %}
+            <div class="row no-gutters border text-light bg-dark">
+                <div class="col-12 ">{{ category.title }}</div>
+            </div>
+        {% for topic in category.topics.all %}
+            <div class="row">
+            
+            <div class="col-sm">
+                <h5 class="mt-0"><a href="#" class="link-dark"> {{ topic.title }} </a></h5>
+                <p> {{ topic.description }}</p>
+                <p> Threads: {{ topic.num_of_threads }}</p>
+                
+            </div>
+            <div class="col-sm">
+                {% if topic.latest_post %}
+                    Latest Post: {{ topic.latest_post.content | slice:"0:3" }}... by {{ topic.latest_post.user_id.first_name }}
+                {% endif %}
+            </div>
+            </div>
+        {% endfor %}
+
+        {% endfor %}
+      </div>
+
+{% endblock %}
